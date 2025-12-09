@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dhairya Paryani | Neuroeconomics & Neuroscience Explorer</title>
+    <!-- Load Google Fonts: Montserrat (Headings) and Lato (Body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Define custom Tailwind configuration */
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#4A90E2', /* Soft Blue (Neuroscience) */
+                        'subtle-bg': '#F2F2F2',    /* Soft Gray (Other Research) */
+                        'accent-gold': '#F5C469',  /* Gold (Behavioral Econ) */
+                        'text-dark': '#1A1A1A',
+                    },
+                    fontFamily: {
+                        heading: ['Montserrat', 'sans-serif'],
+                        body: ['Lato', 'sans-serif'],
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: 0, transform: 'translateY(20px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        },
+                        pulseGold: {
+                            '0%, 100%': { opacity: 1, boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06)' },
+                            '50%': { opacity: 0.8, boxShadow: '0 10px 15px -3px rgba(245, 196, 105, 0.5), 0 4px 6px -4px rgba(245, 196, 105, 0.5)' },
+                        },
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out',
+                        'pulse-gold': 'pulseGold 4s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </style>
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            color: #1A1A1A;
+            background-color: #FFFFFF;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+        /* Style for interactive card details */
+        .card-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .card-detail.expanded {
+            max-height: 500px; /* A large enough value for max content */
+            padding-top: 1rem;
+        }
+        .section-padding {
+            padding: 4rem 1rem;
+        }
+        @media (min-width: 640px) {
+            .section-padding {
+                padding: 6rem 4rem;
+            }
+        }
+        /* Tailwind utility styles for buttons (defined globally here for brevity) */
+        .btn-primary {
+            @apply inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-primary-blue hover:bg-primary-blue/90 transition-all duration-300 transform hover:scale-[1.02];
+        }
+        .btn-secondary {
+            @apply inline-flex items-center justify-center px-8 py-3 border-2 border-primary-blue text-base font-medium rounded-full text-primary-blue bg-white hover:bg-primary-blue/10 transition-all duration-300 transform hover:scale-[1.02];
+        }
+    </style>
+</head>
+
+<body class="text-text-dark">
+
+    <!-- Sticky Navigation Menu -->
+    <nav id="navbar" class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm shadow-md transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Title -->
+                <div class="flex-shrink-0">
+                    <a href="#home" class="text-xl font-heading text-primary-blue hover:text-accent-gold transition-colors">
+                        Dhairya.
+                    </a>
+                </div>
+                <!-- Desktop Menu Links (Contact removed from Nav) -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link text-gray-700 hover:text-primary-blue font-semibold transition duration-150">Home</a>
+                    <a href="#insights" class="nav-link text-gray-700 hover:text-primary-blue font-semibold transition duration-150">Insights</a>
+                    <a href="#portfolio" class="nav-link text-gray-700 hover:text-primary-blue font-semibold transition duration-150">Portfolio</a>
+                    <a href="#about" class="nav-link text-gray-700 hover:text-primary-blue font-semibold transition duration-150">About</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden p-2 text-gray-700 hover:text-primary-blue rounded-md transition duration-150">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu (Contact removed from Nav) -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center bg-white/90">
+                <a href="#home" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-subtle-bg hover:text-primary-blue">Home</a>
+                <a href="#insights" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-subtle-bg hover:text-primary-blue">Insights</a>
+                <a href="#portfolio" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-subtle-bg hover:text-primary-blue">Portfolio</a>
+                <a href="#about" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-subtle-bg hover:text-primary-blue">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Home Section -->
+    <section id="home" class="section-padding min-h-screen flex items-center bg-subtle-bg">
+        <div class="max-w-4xl mx-auto text-center animate-fade-in-up">
+            <h1 class="text-4xl sm:text-6xl lg:text-7xl font-heading text-primary-blue leading-tight mb-6">
+                Exploring How the Brain Influences Decisions and Customer Behavior
+            </h1>
+            <p class="text-lg sm:text-xl text-gray-700 mb-10 max-w-2xl mx-auto">
+                Hi, I'm Dhairya. I'm a high school student fascinated by Neuroeconomics—the blend of neuroscience, economics, and psychology. I study the brain's role in decision-making, driven by curiosity and a passion for data-driven insights.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="#insights" class="btn-primary">
+                    Explore Insights
+                </a>
+                <a href="#portfolio" class="btn-secondary">
+                    View Portfolio
+                </a>
+            </div>
+
+            <!-- Featured Insight Card (Dynamic Content) -->
+            <div id="featured-insight-card" class="mt-16 p-6 bg-white rounded-xl shadow-lg border-l-4 border-accent-gold max-w-md mx-auto transition-all duration-700 ease-in-out animate-pulse-gold">
+                <!-- Content will be injected by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Insights Section (Interactive Cards & Polls) -->
+    <section id="insights" class="section-padding bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-heading text-text-dark mb-12 border-b-2 border-primary-blue/30 pb-3">
+                Insights and Research Topics
+            </h2>
+
+            <!-- Filtering Placeholder -->
+            <div class="mb-8 flex flex-wrap gap-3">
+                <button data-filter="all" class="filter-btn px-4 py-2 text-sm font-semibold rounded-full bg-primary-blue text-white shadow-md hover:opacity-90 transition duration-150">All Topics</button>
+                <button data-filter="neuroscience" class="filter-btn px-4 py-2 text-sm font-semibold rounded-full bg-primary-blue/20 text-primary-blue hover:bg-primary-blue hover:text-white transition duration-150">Neuroscience (Blue)</button>
+                <button data-filter="behavioral-econ" class="filter-btn px-4 py-2 text-sm font-semibold rounded-full bg-accent-gold/20 text-accent-gold hover:bg-accent-gold hover:text-white transition duration-150">Behavioral Econ (Gold)</button>
+                <button data-filter="research" class="filter-btn px-4 py-2 text-sm font-semibold rounded-full bg-subtle-bg text-gray-700 hover:bg-gray-400 hover:text-white transition duration-150">Other Research (Gray)</button>
+            </div>
+
+            <div id="insights-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Cards will be dynamically injected here by JavaScript -->
+            </div>
+
+            <!-- Poll Section Placeholder - Updated Questions (Simple and Easy) -->
+            <div class="mt-20 p-8 bg-subtle-bg rounded-xl shadow-inner border-t-4 border-primary-blue max-w-3xl mx-auto">
+                <h3 class="text-2xl font-heading text-primary-blue mb-4">Interactive Poll: What Interests You Most?</h3>
+                <p class="text-gray-700 mb-6">Pick the idea you want to hear more about. Your vote helps choose the next research project!</p>
+                <form>
+                    <div class="space-y-3">
+                        <label class="block">
+                            <input type="radio" name="poll" value="loss-aversion" class="text-accent-gold focus:ring-accent-gold mr-2">
+                            A. Why losing money feels worse than winning money feels good. (Loss Aversion)
+                        </label>
+                        <label class="block">
+                            <input type="radio" name="poll" value="anchoring" class="text-accent-gold focus:ring-accent-gold mr-2">
+                            B. How the first price you see changes what you think a product is worth. (Anchoring)
+                        </label>
+                        <label class="block">
+                            <input type="radio" name="poll" value="bandwagon" class="text-accent-gold focus:ring-accent-gold mr-2">
+                            C. Why we tend to buy things when everyone else is buying them. (Bandwagon Effect)
+                        </label>
+                        <label class="block">
+                            <input type="radio" name="poll" value="confirmation" class="text-accent-gold focus:ring-accent-gold mr-2">
+                            D. Why people mainly look for facts that support what they already believe. (Confirmation Bias)
+                        </label>
+                        <label class="block">
+                            <input type="radio" name="poll" value="framing" class="text-accent-gold focus:ring-accent-gold mr-2">
+                            E. How using different words to describe the same choice changes your mind. (Framing Effect)
+                        </label>
+                    </div>
+                    <button type="submit" class="mt-6 px-6 py-2 bg-accent-gold text-white font-semibold rounded-full hover:bg-accent-gold/90 transition duration-150">Submit Vote</button>
+                </form>
+            </div>
+
+            <div class="mt-12 text-center">
+                <p class="text-gray-500 italic">Feedback on any insight can be submitted via the embedded Google Form link inside each expanded card.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Portfolio Section -->
+    <section id="portfolio" class="section-padding bg-subtle-bg border-t border-b border-primary-blue/10">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-heading text-text-dark mb-12 border-b-2 border-accent-gold/30 pb-3">
+                Portfolio and Behavioral Experiments
+            </h2>
+
+            <div class="bg-white p-8 rounded-xl shadow-2xl border-l-4 border-primary-blue">
+                <p class="text-xl text-gray-800 mb-6">
+                    I am currently exploring customer neuroscience and other ongoing research projects. This space is dedicated to documenting the methodology, data, and outcomes.
+                </p>
+                <p class="text-lg text-gray-600 italic">
+                    Results and projects will be updated soon. Expect to see data visualizations, charts, and diagrams detailing experimental setups on topics like decision paralysis and framing effects.
+                </p>
+                <!-- Placeholder for future visuals -->
+                <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-6 bg-gray-100 rounded-lg border border-dashed border-gray-400 text-center text-gray-500">
+                        [Placeholder: Experiment 1 Setup Diagram]
+                    </div>
+                    <div class="p-6 bg-gray-100 rounded-lg border border-dashed border-gray-400 text-center text-gray-500">
+                        [Placeholder: Data Visualization Chart]
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. About Section (Timeline Removed) -->
+    <section id="about" class="section-padding bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-heading text-text-dark mb-12 border-b-2 border-primary-blue/30 pb-3">
+                My Story and Passions
+            </h2>
+
+            <!-- Adjusted grid to 2 columns since the timeline was removed -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div class="lg:col-span-1 space-y-6 text-lg text-gray-700">
+                    <p>
+                        I'm Dhairya, a high school student with a deep interest in what makes people act. This journey into Neuroeconomics began when I realized the complex systems of the brain guide our behavior in the market and in daily life, often in surprising ways.
+                    </p>
+                    <p>
+                        Beyond academic exploration, my focus sharpens on the tennis court. The need for quick, high-pressure decisions in competitive tennis is a practical lesson in fast thinking and efficiency—a mirror to the quick decision systems I study in neuroscience.
+                    </p>
+                    <p>
+                        This website serves as my ongoing portfolio, showing my commitment to learning and exploration. I believe that understanding the brain is the key to mastering behavior, whether it's customer choice or personal growth.
+                    </p>
+                </div>
+                <!-- New summary box in place of the timeline -->
+                <div class="lg:col-span-1 p-8 bg-primary-blue/10 rounded-xl shadow-md border-t-4 border-primary-blue">
+                    <h3 class="text-2xl font-heading text-primary-blue mb-4">Core Research Principles</h3>
+                    <ul class="space-y-3 text-gray-800 list-disc list-inside">
+                        <li>Decision-making is driven by System 1 (fast/intuitive) thinking.</li>
+                        <li>Behavior is often governed by anticipating rewards (dopamine loops).</li>
+                        <li>Losses are psychologically twice as powerful as equivalent gains.</li>
+                        <li>Attention is captured by visual saliency (color, placement, novelty).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section Removed -->
+
+    <!-- Footer (Prominent Contact/Email Added) -->
+    <footer class="bg-text-dark text-white p-10 text-center text-sm">
+        <div class="max-w-7xl mx-auto">
+            <h3 class="text-2xl font-heading text-accent-gold mb-3">Contact</h3>
+            <p class="text-lg mb-4">
+                Reach out for collaboration or discussion:
+            </p>
+            <!-- STYLED FOR MAXIMUM VISIBILITY: ACCENT-GOLD AND LARGE FONT -->
+            <p class="text-accent-gold text-2xl font-semibold mb-6">
+                Email: <a href="mailto:paryanidhairya3@gmail.com" class="hover:text-primary-blue transition-colors underline">PARYANIDHAIRYA3@GMAIL.COM</a>
+            </p>
+            <p class="mb-1 text-gray-400">&copy; 2025 Dhairya Paryani. Exploring Customer Neuroscience.</p>
+        </div>
+    </footer>
+
+    <!-- Persistent Social Links (Bottom Right Corner) -->
+    <div class="fixed bottom-4 right-4 z-40 flex flex-col space-y-3 bg-white p-2 rounded-xl shadow-2xl border border-primary-blue/20 hidden md:flex">
+        <a href="https://www.instagram.com/dhairya.paryani" target="_blank" title="Instagram: @dhairya.paryani" class="text-primary-blue hover:text-accent-gold transition duration-150">
+            <!-- Instagram SVG -->
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.685.01 3.633.041 1.05.034 1.637.218 2.053.385.503.2.855.438 1.206.789.352.352.587.703.788 1.206.167.416.351 1.003.385 2.053.03 1.008.04 1.259.04 3.633v1.66c0 2.43-.01 2.685-.041 3.633-.034 1.05-.218 1.637-.385 2.053-.2.503-.438.855-.789 1.206-.352.352-.703.587-.788 1.206-.167.416-1.003.351-2.053.385-.03 1.008-.04 1.259-.04 3.633v-1.66c0-2.43.01-2.685.041-3.633.034-1.05.218-1.637.385-2.053.2-.503.438-.855.789-1.206.352-.352.703-.587 1.206.788.416.167 1.003.351 2.053.385C9.65 2.01 9.399 2 6.969 2h-1.66c-2.43 0-2.685.01-3.633.041-1.05-.034-1.637-.218-2.053-.385-.503.2-.855.438-1.206.789-.352.352-.703.587-1.206.788-.416.167-1.003.351-2.053.385-1.008.03-1.259.04-3.633.04h1.66zM12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.657 0-3-1.343-3-3s1.343-3 3-3 3 1.343 3 3-1.343 3-3 3z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/dhairya-paryani" target="_blank" title="LinkedIn: Dhairya Paryani" class="text-primary-blue hover:text-accent-gold transition duration-150">
+            <!-- LinkedIn SVG -->
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.381 1.11-2.5 2.48-2.5s2.48 1.119 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.991v16h4.991v-8.399c0-4.67 6.029-4.331 6.029 0v8.399h4.988v-10.137c0-7.85-8.625-7.593-9.943-3.8z"/></svg>
+        </a>
+        <a href="mailto:paryanidhairya3@gmail.com" target="_blank" title="Gmail: paryanidhairya3@gmail.com" class="text-primary-blue hover:text-accent-gold transition duration-150">
+            <!-- Mail SVG -->
+            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M.05 3.513l11.416 9.423 11.417-9.423c-1.15-.758-2.618-1.157-4.25-1.157h-14.333c-1.632 0-3.1.399-4.25 1.157zm0 16.974v-13.974c0-1.036.843-1.879 1.879-1.879h16.142c1.036 0 1.879.843 1.879 1.879v13.974c0 1.036-.843 1.879-1.879 1.879h-16.142c-1.036 0-1.879-.843-1.879-1.879zm1.879-13.974h16.142v13.974h-16.142v-13.974z"/></svg>
+        </a>
+    </div>
+
+    <!-- JavaScript for Interactivity and Dynamic Content -->
+    <script>
+        // --- DATA DEFINITION ---
+        const insightsData = [
+            {
+                topic: 'neuroscience',
+                title: "How Customers Make Quick Decisions",
+                summary: "The human brain uses two systems for choice: fast (intuitive) and slow (rational). Most daily buying decisions rely on the quick, System 1 thinking to save energy.",
+                detail: "Neurological studies show System 1 decisions activate the amygdala and basal ganglia, linked to emotion and habit. Marketing that uses visual cues and trust signals targets this rapid decision-making pathway, bypassing the slower, resource-intensive prefrontal cortex (System 2)."
+            },
+            {
+                topic: 'behavioral-econ',
+                title: "Motivation and Spending Habits (Dopamine Loop)",
+                summary: "Our brain's reward system, which releases dopamine, strongly influences impulsive purchases by linking expected satisfaction to immediate action.",
+                detail: "Anticipation of a reward (like shopping for a new product) releases dopamine, which is often more potent than the reward itself. This anticipation helps form habits and is a key area of study in neuroeconomics related to consumer loops."
+            },
+            {
+                topic: 'neuroscience',
+                title: "Attention and Choices: The Saliency Effect",
+                summary: "Selective attention filters too much sensory information, making sure only important data reaches the decision centers. Visual presentation is key to capturing initial focus.",
+                detail: "Studies using eye-tracking and EEG show that how a product is presented (color, placement, scarcity indicators) captures attention almost instantly. The brain's attention network helps filter distractions, making visual presentation very important for initial engagement."
+            },
+            {
+                topic: 'behavioral-econ',
+                title: "The Endowment Effect (Loss Aversion)",
+                summary: "We value things we own more highly than identical items we don't. This bias is linked to the brain's reaction to the pain of 'loss.'",
+                detail: "Loss aversion—the feeling that the pain of a loss is twice as strong as the pleasure of an equal gain—is a central concept in neuroeconomics. It explains why people are hesitant to sell possessions and the success of free trials."
+            },
+            {
+                topic: 'research',
+                title: "Research on Learning, Memory, and Behavior",
+                summary: "Beyond buying habits, I explore how the brain changes (neuroplasticity) affects skill acquisition (like tennis) and how long-term memories are created.",
+                detail: "This area looks at the hippocampus and brain networks involved in storing memory. Understanding these mechanisms is key to improving personal learning and educational strategies."
+            }
+        ];
+
+        // --- UTILITY FUNCTIONS ---
+
+        /**
+         * Generates the SVG icon based on the insight topic.
+         * @param {string} topic - The topic ('neuroscience', 'behavioral-econ', 'research').
+         * @returns {string} The HTML string for the SVG icon.
+         */
+        function getIconSVG(topic) {
+            let colorClass = 'text-primary-blue';
+            let iconPath = '';
+
+            switch (topic) {
+                case 'behavioral-econ':
+                    colorClass = 'text-accent-gold';
+                    // Currency/Coin Icon
+                    iconPath = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8V9m0 3v1m0 3v1m0 0c-1.657 0-3-.895-3-2s1.343-2 3-2 3-.895 3-2-1.343-2-3-2M9 19H7a2 2 0 01-2-2V7a2 2 0 012-2h10a2 2 0 012 2v3m-3 4l3-3m0 0l-3-3m3 3l-3 3"/>';
+                    break;
+                case 'research':
+                    colorClass = 'text-gray-500';
+                    // Flask/Science Icon
+                    iconPath = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 10H3m16 0h-2M5 14H3m16 0h-2m-8-8a8 8 0 00-8 8H3l4 4 4-4H9a8 8 0 008-8h-2z"/>';
+                    break;
+                case 'neuroscience':
+                default:
+                    colorClass = 'text-primary-blue';
+                    // Brain Icon
+                    iconPath = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9a9 9 0 00-9-9m-1.5 6h.01M17.5 12h.01M13.5 12h.01M7.5 12h.01"/>';
+                    break;
+            }
+
+            return `<div class="w-full h-32 bg-${topic === 'research' ? 'subtle-bg' : topic === 'behavioral-econ' ? 'accent-gold/10' : 'primary-blue/10'} flex items-center justify-center rounded-lg mb-4">
+                        <svg class="w-16 h-16 ${colorClass}" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">${iconPath}</svg>
+                    </div>`;
+        }
+
+        /**
+         * Creates the HTML structure for a single insight card.
+         * @param {Object} insight - The insight data object.
+         * @returns {string} The HTML string for the card.
+         */
+        function createInsightCard(insight) {
+            const cardColor = insight.topic === 'neuroscience' ? 'primary-blue' : insight.topic === 'behavioral-econ' ? 'accent-gold' : 'gray-400';
+            const bgColor = insight.topic === 'research' ? 'subtle-bg' : 'white';
+
+            return `
+                <div class="insight-card bg-${bgColor} rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden cursor-pointer data-topic="${insight.topic}" onclick="toggleDetail(this)">
+                    <div class="p-6">
+                        <h3 class="text-xl font-heading text-${cardColor} mb-3">${insight.title}</h3>
+                        ${getIconSVG(insight.topic)}
+                        <p class="text-gray-700 text-sm mb-4">
+                            ${insight.summary}
+                        </p>
+                        <button class="text-sm text-accent-gold font-semibold hover:text-primary-blue transition duration-150 mt-2 flex items-center">
+                            <span>Read More</span>
+                            <svg class="w-4 h-4 ml-1 transform transition-transform duration-300 expand-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                    </div>
+                    <div class="card-detail bg-white p-6 border-t border-${cardColor}/20">
+                        <p class="text-gray-800 text-sm">
+                            <strong>Detailed Insight:</strong> ${insight.detail}
+                        </p>
+                        <a href="https://forms.gle/YOUR_GOOGLE_FORM_LINK" target="_blank" class="mt-4 inline-block text-xs font-semibold px-3 py-1 bg-primary-blue text-white rounded-full hover:bg-primary-blue/90 transition-colors">
+                            Leave Feedback / Discuss
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+
+        // --- DYNAMIC RENDERING FUNCTIONS ---
+
+        /**
+         * Renders all insight cards to the grid container.
+         */
+        function renderInsights(filter = 'all') {
+            const grid = document.getElementById('insights-grid');
+            grid.innerHTML = ''; // Clear existing cards
+
+            const filteredInsights = filter === 'all'
+                ? insightsData
+                : insightsData.filter(i => i.topic === filter);
+
+            filteredInsights.forEach(insight => {
+                const card = createInsightCard(insight);
+                grid.innerHTML += card;
+            });
+        }
+
+        /**
+         * Rotates the featured insight card content.
+         */
+        let featuredIndex = 0;
+        function rotateFeaturedInsight() {
+            const card = document.getElementById('featured-insight-card');
+            const insight = insightsData[featuredIndex];
+            const cardColor = insight.topic === 'behavioral-econ' ? 'accent-gold' : 'primary-blue';
+            const topicLabel = insight.topic === 'behavioral-econ' ? 'Behavioral Economics' : 'Neuroscience';
+
+            card.innerHTML = `
+                <h3 class="text-xl font-heading text-${cardColor} mb-2">Featured Insight: ${topicLabel}</h3>
+                <p class="text-gray-700 text-sm font-semibold">${insight.title}</p>
+                <p class="text-gray-700 text-xs mt-1">${insight.summary}</p>
+            `;
+
+            // Update card border color and animation properties
+            card.className = card.className.replace(/border-l-4 border-[\w\-\/]+/g, `border-l-4 border-${cardColor}`);
+            card.classList.add('animate-pulse-gold');
+
+
+            featuredIndex = (featuredIndex + 1) % insightsData.length;
+        }
+
+
+        // --- INTERACTIVITY FUNCTIONS ---
+
+        /**
+         * Toggles the visibility and expansion state of an interactive insight card.
+         * @param {HTMLElement} card - The parent insight-card element.
+         */
+        function toggleDetail(card) {
+            const detail = card.querySelector('.card-detail');
+            const icon = card.querySelector('.expand-icon');
+            const isExpanded = detail.classList.contains('expanded');
+
+            // Collapse all other cards
+            document.querySelectorAll('.insight-card').forEach(otherCard => {
+                const otherDetail = otherCard.querySelector('.card-detail');
+                const otherIcon = otherCard.querySelector('.expand-icon');
+                if (otherDetail !== detail && otherDetail.classList.contains('expanded')) {
+                    otherDetail.classList.remove('expanded');
+                    otherIcon.classList.remove('rotate-180');
+                    otherDetail.style.maxHeight = null;
+                }
+            });
+
+            if (isExpanded) {
+                // Collapse the card
+                detail.classList.remove('expanded');
+                icon.classList.remove('rotate-180');
+                detail.style.maxHeight = null;
+            } else {
+                // Expand the card
+                detail.style.maxHeight = detail.scrollHeight + "px";
+                detail.classList.add('expanded');
+                icon.classList.add('rotate-180');
+            }
+        }
+
+        // --- EVENT LISTENERS & INITIALIZATION ---
+
+        window.onload = function () {
+            // Initial render of all cards
+            renderInsights('all');
+
+            // Initial load of the featured card and start rotation
+            rotateFeaturedInsight();
+            setInterval(rotateFeaturedInsight, 8000); // Rotate every 8 seconds
+
+            // Mobile Menu Toggle
+            document.getElementById('mobile-menu-button').addEventListener('click', function () {
+                document.getElementById('mobile-menu').classList.toggle('hidden');
+            });
+
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    // Close mobile menu after clicking a link
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                });
+            });
+
+            // Filtering logic
+            document.querySelectorAll('.filter-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    renderInsights(filter);
+
+                    // Update button styling
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('bg-primary-blue', 'text-white');
+
+                        // Reset all to default non-selected state
+                        if (btn.getAttribute('data-filter') === 'neuroscience') {
+                            btn.className = 'filter-btn px-4 py-2 text-sm font-semibold rounded-full bg-primary-blue/20 text-primary-blue hover:bg-primary-blue hover:text-white transition duration-150';
+                        } else if (btn.getAttribute('data-filter') === 'behavioral-econ') {
+                            btn.className = 'filter-btn px-4 py-2 text-sm font-semibold rounded-full bg-accent-gold/20 text-accent-gold hover:bg-accent-gold hover:text-white transition duration-150';
+                        } else if (btn.getAttribute('data-filter') === 'research') {
+                            btn.className = 'filter-btn px-4 py-2 text-sm font-semibold rounded-full bg-subtle-bg text-gray-700 hover:bg-gray-400 hover:text-white transition duration-150';
+                        } else { // 'all'
+                             btn.className = 'filter-btn px-4 py-2 text-sm font-semibold rounded-full bg-primary-blue/20 text-primary-blue hover:bg-primary-blue hover:text-white transition duration-150';
+                        }
+                    });
+
+                    // Apply selected style
+                    this.classList.add('bg-primary-blue', 'text-white');
+                    this.classList.remove('bg-primary-blue/20', 'text-primary-blue', 'bg-accent-gold/20', 'text-accent-gold', 'bg-subtle-bg', 'text-gray-700');
+                });
+            });
+            // Set 'All Topics' button as active initially
+            document.querySelector('[data-filter="all"]').classList.remove('bg-primary-blue/20', 'text-primary-blue');
+            document.querySelector('[data-filter="all"]').classList.add('bg-primary-blue', 'text-white');
+        };
+    </script>
+</body>
+</html>
